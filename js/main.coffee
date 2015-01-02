@@ -39,6 +39,10 @@ GLIDER_GUN = [
   18, 12
 ]
 
+ROWS = 50
+COLUMNS = 75
+
+
 RULES =
   "2_live": 'live'
   "3_live": 'live'
@@ -59,12 +63,31 @@ make_id = (col, row) ->
 set_state = (col, row, state) ->
   $(make_id(col, row)).attr class: state
 
+
+torus = (col, row) ->
+  # Make the universe a torus
+  if col > COLUMNS
+    col = 1
+  else if col < 1
+    col = COLUMNS
+
+  if row > ROWS
+    row = 1
+  else if row < 1
+    row = ROWS
+  [col, row]
+
 get_state_numeric = (col, row) ->
   # if cell is live returns 1, 0 otherwise
+#  [col, row] = torus(col, row)
   if $(make_id(col, row)).hasClass('live')
     1
   else
     0
+
+get_state = (col, row) ->
+  ['dead', 'live'][get_state_numeric(col, row)]
+
 
 toggle = (cell_id) ->
   if $("#control")[0].value == "run"
@@ -73,12 +96,8 @@ toggle = (cell_id) ->
     $(cell_id).attr class: 'dead'
   else
     $(cell_id).attr class: 'live'
-get_state = (col, row) ->
-  # if cell is live returns 1, 0 otherwise
-  if $(make_id(col, row)).hasClass('live')
-    'live'
-  else
-    'dead'
+
+
 
 count_neighbors = (col, row) ->
   # returns the count of the 8 neighborhood
@@ -127,8 +146,6 @@ list_cells = (div, columns, rows) ->
       if get_state(col, row) == 'live'
          $("#coord_list").append(col + ", " + row + "\n")
 $(document).ready( () ->
-  ROWS = 50
-  COLUMNS = 75
   create_table("#life", COLUMNS, ROWS)
   index = 0;
   while index < GLIDER_GUN.length
