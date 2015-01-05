@@ -99,18 +99,19 @@ textarea {
 
 
 #life table tr td {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
     font-size: 2pt;
-    border: inset;
+    /*border: inset;*/
+    align-content: center;
 }
 
 td.live {
-    background: black;
+    background: lawngreen;
 }
 
 td.dead {
-    background: white;
+    background: indianred;
 }
 
 
