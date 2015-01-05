@@ -62,7 +62,7 @@ make_id = (col, row) ->
 
 set_state = (col, row, state) ->
   $(make_id(col, row)).attr class: state
-
+#  $(make_id(col, row)).text(state[0])
 
 torus = (col, row) ->
   # Make the universe a torus
@@ -94,9 +94,10 @@ toggle = (cell_id) ->
     return
   if $(cell_id).hasClass('live')
     $(cell_id).attr class: 'dead'
+    $(cell_id).innerText = "D"
   else
     $(cell_id).attr class: 'live'
-
+    $(cell_id).innerText = "L"
 
 
 count_neighbors = (col, row) ->
